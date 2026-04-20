@@ -3,10 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.DAO.TurnoDAO;
 import com.example.demo.Modelo.Turno;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,15 @@ public class ControllerTurno {
     @GetMapping("/{id}")
     public List<Turno> listaTurnoID(@PathVariable int id){
         return turnoDAO.listarTurnosXid(id);
+    }
+
+    @PostMapping("/guardar")
+    public String guardarTurno(@RequestBody Turno turno) {
+        try {
+            turnoDAO.crearNuevoTurno(turno);
+            return "Turno creado correctamente";
+        } catch (Exception e) {
+            return "Error al crear el turno: " + e.getMessage();
+        }
     }
 }

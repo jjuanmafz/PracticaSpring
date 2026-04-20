@@ -80,5 +80,27 @@ public class TurnoDAO {
         return lista;
     }
 
+    public void crearNuevoTurno  (Turno turno)
+    {
+        String sql= "INSERT INTO turno (fecha, hora, motivo, estado, id_cliente, id_veterinaria, id_mascota) " +
+                "VALUES (?,?,?,?,?,?,?)";
+        try(Connection con= dataSource.getConnection();
+            PreparedStatement ps=con.prepareStatement(sql))  {
+            ps.setObject(1, turno.getFecha());
+            ps.setObject(2, turno.getHora());
+            ps.setString(3, turno.getMotivo());
+            ps.setString(4, turno.getEstado());
+            ps.setInt(5, turno.getIdCliente());
+            ps.setInt(6,turno.getIdVeterinaria());
+            ps.setInt(7,turno.getIdMascota());
+
+            ps.executeUpdate();
+
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
 }
